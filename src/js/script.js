@@ -1,4 +1,6 @@
-/* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
+/* global Handlebars, utils, dataSource */
+
+// eslint-disable-line no-unused-vars
 
 {
   'use strict';
@@ -8,6 +10,7 @@
       menuProduct: '#template-menu-product',
     },
     containerOf: {
+
       menu: '#product-list',
       cart: '#cart',
     },
@@ -58,7 +61,7 @@
       thisProduct.id = id;
       thisProduct.data = data;
       thisProduct.renderInMenu();
-      console.log('new Product:', thisProduct);
+
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
@@ -69,7 +72,7 @@
       const thisProduct = this;
       /*generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      console.log('generatedHTML:', generatedHTML);
+
       /*create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
       /*find menu container */
@@ -83,12 +86,13 @@
 
       thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      console.log ('form: ', thisProduct.form);
+
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      console.log ('formInputs: ', thisProduct.formInputs);
+
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      console.log ('cartButton: ', thisProduct.cartButton);
+
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion() {
@@ -121,7 +125,7 @@
     }
     initOrderForm() {
       const thisProduct = this;
-      console.log ('initOrderForm');
+
 
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
@@ -143,19 +147,19 @@
 
     processOrder() {
       const thisProduct = this;
-      console.log ('processOrder');
+
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log ('formData', formData);
+
       /* set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;
 
-      for(let paramID in thisProduct.data.params){ /* START LOOP: for each paramId in thisProduct.data.params */
+      for(let paramId in thisProduct.data.params){ /* START LOOP: for each paramId in thisProduct.data.params */
         const param = thisProduct.data.params[paramId]; /* save the element in thisProduct.data.params with key paramId as const param */
 
-        for(let optionID in param.options){/* START LOOP: for each optionId in param.options */
-          const option = thisProduct.param.options[optionID];/* save the element in param.options with key optionId as const option */
-          const optionSelected = formData.hasOwnProperty(paramId) &&
+        for(let optionId in param.options){/* START LOOP: for each optionId in param.options */
+          const option = param.options[optionId];/* save the element in param.options with key optionId as const option */
+          const optionSelected = Object.prototype.hasOwnProperty.call(formData, paramId) &&
         formData[paramId].indexOf(optionId) > -1;
           /* START IF: if option is selected and option is not default */
           if(optionSelected && !option.default){
@@ -178,7 +182,7 @@
   const app = {
     initMenu: function(){
       const thisApp = this;
-      console.log('thisApp.data: ', thisApp.data);
+
       for (let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
       }
@@ -191,11 +195,7 @@
 
     init: function(){
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
+
 
       thisApp.initData();
       thisApp.initMenu();
