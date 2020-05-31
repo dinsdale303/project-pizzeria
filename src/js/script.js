@@ -169,6 +169,26 @@
             /* deduct price of option from price */
             price -= option.price;
           }
+          /* select images*/
+
+          const ingredientPics = thisProduct.imageWrapper.querySelectorAll(
+            '.' + paramId + '-' + optionId);
+          if (optionSelected) {
+            if (!thisProduct.data.params[paramId]) {
+              thisProduct.data.params[paramId] = {
+                label: param.label,
+                options: {}
+              };
+            }
+            thisProduct.data.params[paramId].options[optionId] = option.label;
+            for (let ingredientPic of ingredientPics) {
+              ingredientPic.classList.add(classNames.menuProduct.imageVisible);
+            }
+          } else {
+            for (let ingredientPic of ingredientPics) {
+              ingredientPic.classList.remove(classNames.menuProduct.imageVisible);
+            }
+          }
           /* END ELSE IF: if option is not selected and option is default */
         }
         /* END LOOP: for each optionId in param.options */
