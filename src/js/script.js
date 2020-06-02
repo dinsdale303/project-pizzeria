@@ -165,6 +165,7 @@
 
         for(let optionId in param.options){/* START LOOP: for each optionId in param.options */
           const option = param.options[optionId];/* save the element in param.options with key optionId as const option */
+          console.log (param.options, optionId)
           const optionSelected = Object.prototype.hasOwnProperty.call(formData, paramId) &&
         formData[paramId].indexOf(optionId) > -1;
           /* START IF: if option is selected and option is not default */
@@ -202,57 +203,57 @@
       /* END LOOP: for each paramId in thisProduct.data.params */
 
       /* set the contents of thisProduct.priceElem to be the value of variable price */
-      price =* thisProduct.amountWidget.value;
-      thisProduct.priceElem.innerHTML = thisProduct.price;
+      price *= thisProduct.amountWidget.value;
+      thisProduct.priceElem.innerHTML = price;
     }
 
+  }
+  class AmountWidget {
+    constructor(element) {
+      const thisWidget = this;
+      thisWidget.getElements(element);
+      thisWidget.value = settings.amountWidget.defaultValue;
+      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.initActions();
+
     }
-    class AmountWidget {
-      constructor(element) {
-        const thisWidget = this;
-        thisWidget.getElements(element);
-        thisWidget.value = settings.amountWidget.defaultValue;
+    getElements(element){
+      const thisWidget = this;
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+    setValue(value) {
+      const thisWidget = this;
+      const newValue = parseInt(value);
+      if (newValue != thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
+      thisWidget.input.value = thisWidget.value;
+    }
+    initActions() {
+      const thisWidget = this;
+      thisWidget.input.addEventListener('change', function () {
         thisWidget.setValue(thisWidget.input.value);
-        thisWidget.initActions();
-
-      }
-      getElements(element){
-        const thisWidget = this;
-        thisWidget.element = element;
-        thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-        thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
-        thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
-      }
-      setValue(value) {
-        const thisWidget = this;
-        const newValue = parseInt(value);
-        if (newValue != thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
-          thisWidget.value = newValue;
-          thisWidget.announce();
-        }
-        thisWidget.input.value = thisWidget.value;
-      }
-      initActions() {
-        const thisWidget = this;
-        thisWidget.input.addEventListener('change', function () {
-          thisWidget.setValue(thisWidget.input.value);
-        });
-        thisWidget.linkDecrease.addEventListener('click', function (event) {
-          event.preventDefault();
-          thisWidget.setValue(thisWidget.value - 1);
-        });
-        thisWidget.linkIncrease.addEventListener('click', function (event) {
-          event.preventDefault();
-          thisWidget.setValue(thisWidget.value + 1);
-        });
-      }
-
-      announce() {
-        const thisWidget = this;
-        const event = new Event('updated');
-        thisWidget.element.dispatchEvent(event);
-      }
+      });
+      thisWidget.linkDecrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value - 1);
+      });
+      thisWidget.linkIncrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value + 1);
+      });
     }
+
+    announce() {
+      const thisWidget = this;
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+    }
+  }
 
 
   const app = {
@@ -279,5 +280,5 @@
   };
 
   app.init();
-  console.log
+  console.log;
 }
