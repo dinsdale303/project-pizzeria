@@ -102,16 +102,16 @@
         /* prevent default action for event */
         event.preventDefault();
         /* toggle active class on element of thisProduct */
-        thisProduct.element.classList.toggle('active');
+        thisProduct.element.classList.add(classNames.menuProduct.wrapperActive);
         /* find all active products */
-        const activeProducts = document.querySelectorAll('.product.active'
+        const activeProducts = document.querySelectorAll(select.all.menuProductsActive
         );
         /* START LOOP: for each active product */
         for (let activeProduct of activeProducts) {
           /* START: if the active product isn't the element of thisProduct */
           if (activeProduct !== thisProduct.element) {
             /* remove class active for the active product */
-            activeProduct.classList.remove('active');
+            activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
             /* END: if the active product isn't the element of thisProduct */
           }
           /* END LOOP: for each active product */
@@ -154,6 +154,7 @@
     processOrder() {
       const thisProduct = this;
 
+
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
 
@@ -165,8 +166,7 @@
 
         for(let optionId in param.options){/* START LOOP: for each optionId in param.options */
           const option = param.options[optionId];/* save the element in param.options with key optionId as const option */
-          console.log (param.options, optionId)
-          const optionSelected = Object.prototype.hasOwnProperty.call(formData, paramId) &&
+          const optionSelected = formData.hasOwnProperty(paramId) &&
         formData[paramId].indexOf(optionId) > -1;
           /* START IF: if option is selected and option is not default */
           if(optionSelected && !option.default){
@@ -178,16 +178,10 @@
           }
           /* select images*/
 
-          const ingredientPics = thisProduct.imageWrapper.querySelectorAll(
-            '.' + paramId + '-' + optionId);
+          const ingredientPics = thisProduct.imageWrapper.querySelectorAll(`.${paramId}-${optionId}`
+          );
           if (optionSelected) {
-            if (!thisProduct.data.params[paramId]) {
-              thisProduct.data.params[paramId] = {
-                label: param.label,
-                options: {}
-              };
-            }
-            thisProduct.data.params[paramId].options[optionId] = option.label;
+
             for (let ingredientPic of ingredientPics) {
               ingredientPic.classList.add(classNames.menuProduct.imageVisible);
             }
@@ -280,5 +274,4 @@
   };
 
   app.init();
-  console.log;
 }
