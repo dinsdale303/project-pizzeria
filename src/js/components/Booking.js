@@ -27,7 +27,7 @@ class Booking {
     thisBooking.dom.hoursAmount = thisBooking.generatedDOM.querySelector(
       select.booking.hoursAmount
     );
-    
+    thisBooking.dom.wrapper.appendChild(thisBooking.generatedDOM);
   }
 
   initWidgets() {
