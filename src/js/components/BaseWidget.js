@@ -1,4 +1,4 @@
-class BaseWidget{
+class BaseWidget {
   constructor(wrapperElement, initialValue) {
     const thisWidget = this;
 
@@ -15,7 +15,10 @@ class BaseWidget{
 
   set value(value) {
     const thisWidget = this;
+
     const newValue = thisWidget.parseValue(value);
+
+    /* TODO: Add validation */
 
     if (newValue != thisWidget.correctValue && thisWidget.isValid(newValue)) {
       thisWidget.correctValue = newValue;
@@ -27,20 +30,18 @@ class BaseWidget{
 
   setValue(value) {
     const thisWidget = this;
-    
-    thisWidget.value = value;
-    
-  }
 
-  parseValue(value){
+    thisWidget.value = value;
+  }
+  parseValue(value) {
     return parseInt(value);
   }
-    
-  isValid(value){
+
+  isValid(value) {
     return !isNaN(value);
   }
 
-  renderValue(){
+  renderValue() {
     const thisWidget = this;
 
     thisWidget.dom.wrapper.innerHTML = thisWidget.value;

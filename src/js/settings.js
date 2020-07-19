@@ -45,7 +45,8 @@ export const select = {
     productList: '.cart__order-summary',
     toggleTrigger: '.cart__summary',
     totalNumber: `.cart__total-number`,
-    totalPrice: '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
+    totalPrice:
+      '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
     subtotalPrice: '.cart__order-subtotal .cart__order-price-sum strong',
     deliveryFee: '.cart__order-delivery .cart__order-price-sum strong',
     form: '.cart__order',
@@ -112,7 +113,10 @@ export const settings = {
     tableIdAttribute: 'data-table',
   },
   db: {
-    url: '//localhost:3131',
+    url:
+      '//' +
+      window.location.hostname +
+      (window.location.hostname == 'localhost' ? ':3131' : ''),
     product: 'product',
     order: 'order',
     booking: 'booking',
@@ -125,7 +129,13 @@ export const settings = {
 };
 
 export const templates = {
-  menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
-  cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
-  bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),
+  menuProduct: Handlebars.compile(
+    document.querySelector(select.templateOf.menuProduct).innerHTML
+  ),
+  cartProduct: Handlebars.compile(
+    document.querySelector(select.templateOf.cartProduct).innerHTML
+  ),
+  bookingWidget: Handlebars.compile(
+    document.querySelector(select.templateOf.bookingWidget).innerHTML
+  ),
 };
