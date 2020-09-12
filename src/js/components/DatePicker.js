@@ -33,12 +33,11 @@ class DatePicker extends BaseWidget {
       maxDate: thisWidget.maxDate,
       disable: [
         function (date) {
-          //return true to disable
           return date.getDay() === 1;
         },
       ],
       locale: {
-        firstDayOfWeek: 1, // start week on Monday
+        firstDayOfWeek: 1,
       },
 
       onChange: function (selectedDates, dateStr) {

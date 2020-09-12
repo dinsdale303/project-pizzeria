@@ -9,7 +9,6 @@ const app = {
     thisApp.pages = Array.from(
       document.querySelector(select.containerOf.pages).children
     );
-    console.log(thisApp.pages);
     thisApp.navLinks = Array.from(document.querySelectorAll(select.nav.links));
     thisApp.imageBoxes = Array.from(document.querySelectorAll('.navi a'));
 
@@ -30,11 +29,8 @@ const app = {
       link.addEventListener('click', function (event) {
         const clickedElement = this;
         event.preventDefault();
-
-        /* TODO: get page id from href*/
         const pageId = clickedElement.getAttribute('href');
         const href = pageId.replace('#', '');
-        /* TODO activate page*/
         thisApp.activatePage(href);
       });
     }
@@ -101,9 +97,8 @@ const app = {
         return rawResponse.json();
       })
       .then(function (parsedResponse) {
-        /* save parsedResponse as thisApp.data.products */
+        
         thisApp.data.products = parsedResponse;
-        /* execute initMenu method */
         thisApp.initMenu();
       });
   },
@@ -125,8 +120,7 @@ const app = {
     /* global Flickity */
     const thisApp = this;
     thisApp.initCarousel = new Flickity('.main-carousel', {
-      // options
-      //cellAlign: 'right',
+      
       contain: true,
       autoPlay: true,
       prevNextButtons: false,
@@ -134,37 +128,9 @@ const app = {
       wrapAround: true,
     });
   },
-  /*
-  initCarousel: function () {
-    const thisApp = this;
-    let slideIndex = 0;
-    const carouselSlide = document.querySelectorAll(
-      '.home-carousel-wrapper .slide'
-    );
-    console.log(carouselSlide);
-    let i;
 
-    for (i = 0; i < carouselSlide.length; i++) {
-      carouselSlide[i].style.display = 'none';
-      console.log(carouselSlide[i]);
-    }
-    slideIndex++;
-    if (slideIndex > carouselSlide.length) {
-      slideIndex = 1;
-      console.log(slideIndex);
-    }
-    carouselSlide[slideIndex - 1].style.display = 'block';
-    setTimeout(thisApp.initCarousel, 3000);
-    console.log(thisApp.initCarousel);
-  },
-*/
   init: function () {
     const thisApp = this;
-    //// console.log('*** App starting ***');
-    //// console.log('thisApp:', thisApp);
-    //// console.log('classNames:', classNames);
-    //// console.log('settings:', settings);
-    //// console.log('templates:', templates);
     thisApp.initPages();
     thisApp.initCart();
     thisApp.initData();
